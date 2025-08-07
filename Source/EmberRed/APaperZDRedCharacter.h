@@ -25,13 +25,37 @@ protected:
 
 	void Move(const FInputActionValue& Value);
 
+	void MoveInDirection(const FVector& Direction);
+	void StopMovingInDirection(const FVector& Direction);
+
+	void MoveUp();
+	void MoveDown();
+	void MoveRight();
+	void MoveLeft();
+
+	void StopMoveUp();
+	void StopMoveDown();
+	void StopMoveRight();
+	void StopMoveLeft();
+
 	UPROPERTY(EditAnywhere, Category = "Input")
 	TSoftObjectPtr<UInputMappingContext> InputMapping;
 
 	UPROPERTY(EditAnywhere, Category = "Input")
-	TSoftObjectPtr<UInputAction> MoveAction;
+	TSoftObjectPtr<UInputAction> UpAction;
 	
-	FVector2D CurrentInput = FVector2D::ZeroVector;
-	FVector2D LastDirection = FVector2D::ZeroVector;
+	UPROPERTY(EditAnywhere, Category = "Input")
+	TSoftObjectPtr<UInputAction> DownAction;
 
+	UPROPERTY(EditAnywhere, Category = "Input")
+	TSoftObjectPtr<UInputAction> RightAction;
+
+	UPROPERTY(EditAnywhere, Category = "Input")
+	TSoftObjectPtr<UInputAction> LeftAction;
+
+
+	FVector2D CurrentInput = FVector2D::ZeroVector;
+	FVector LastDirection = FVector::ZeroVector;
+	
+	TArray<FVector> ActiveDirections;
 };

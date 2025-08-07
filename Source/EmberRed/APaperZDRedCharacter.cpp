@@ -37,6 +37,10 @@ void APaperZDRedCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 	//GEngine->AddOnScreenDebugMessage(-1, 0.1f, FColor::Green, TEXT("Tick!"));
+	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, LastDirection.ToString());
+
+	if (!LastDirection.IsZero())
+		AddMovementInput(LastDirection);
 
 }
 
@@ -46,16 +50,87 @@ void APaperZDRedCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInpu
 
 	if (UEnhancedInputComponent* Input = Cast<UEnhancedInputComponent>(PlayerInputComponent))
 	{
-		if (MoveAction)
-		{
-			Input->BindAction(MoveAction.Get(), ETriggerEvent::Triggered, this, &APaperZDRedCharacter::Move);
-		}
+		Input->BindAction(UpAction.Get(), ETriggerEvent::Started, this, &APaperZDRedCharacter::MoveUp);
+		Input->BindAction(DownAction.Get(), ETriggerEvent::Started, this, &APaperZDRedCharacter::MoveDown);
+		Input->BindAction(RightAction.Get(), ETriggerEvent::Started, this, &APaperZDRedCharacter::MoveRight);
+		Input->BindAction(LeftAction.Get(), ETriggerEvent::Started, this, &APaperZDRedCharacter::MoveLeft);
+	
+		Input->BindAction(UpAction.Get(), ETriggerEvent::Completed, this, &APaperZDRedCharacter::StopMoveUp);
+		Input->BindAction(DownAction.Get(), ETriggerEvent::Completed, this, &APaperZDRedCharacter::StopMoveDown);
+		Input->BindAction(RightAction.Get(), ETriggerEvent::Completed, this, &APaperZDRedCharacter::StopMoveRight);
+		Input->BindAction(LeftAction.Get(), ETriggerEvent::Completed, this, &APaperZDRedCharacter::StopMoveLeft);
 	}
-
 }
+
+void APaperZDRedCharacter::MoveUp()
+{
+	MoveInDirection(-FVector::RightVector);
+}
+
+void APaperZDRedCharacter::MoveDown()
+{
+	MoveInDirection(FVector::RightVector);
+}
+
+void APaperZDRedCharacter::MoveRight()
+{
+	MoveInDirection(FVector::ForwardVector);
+}
+
+void APaperZDRedCharacter::MoveLeft()
+{
+	MoveInDirection(-FVector::ForwardVector);
+}
+
+
+void APaperZDRedCharacter::StopMoveUp()
+{
+	StopMovingInDirection(-FVector::RightVector);
+}
+
+void APaperZDRedCharacter::StopMoveDown()
+{
+	StopMovingInDirection(FVector::RightVector);
+}
+
+void APaperZDRedCharacter::StopMoveRight()
+{
+	StopMovingInDirection(FVector::ForwardVector);
+}
+
+void APaperZDRedCharacter::StopMoveLeft()
+{
+	StopMovingInDirection(-FVector::ForwardVector);
+}
+
+void APaperZDRedCharacter::MoveInDirection(const FVector& Direction)
+{
+	if (!ActiveDirections.Contains(Direction))
+	{
+		ActiveDirections.Add(Direction);
+		LastDirection = Direction;
+	}
+}
+
+void APaperZDRedCharacter::StopMovingInDirection(const FVector& Direction)
+{
+	ActiveDirections.Remove(Direction);
+
+	if (ActiveDirections.Num() > 0)
+	{
+		LastDirection = ActiveDirections.Last();
+	}
+	else
+	{
+		LastDirection = FVector::ZeroVector;
+	}
+}
+
+
 
 void APaperZDRedCharacter::Move(const FInputActionValue& Value)
 {
+	/*
 	CurrentInput = Value.Get<FVector2D>();
 	
 	if (CurrentInput.IsNearlyZero())
@@ -105,5 +180,5 @@ void APaperZDRedCharacter::Move(const FInputActionValue& Value)
 		AddMovementInput(FVector::ForwardVector, 1.0f);
 	else if (LastDirection.Y > 0.f && CurrentInput.X < 0.f)
 		AddMovementInput(FVector::ForwardVector, -1.0f);
-
+	*/
 }
