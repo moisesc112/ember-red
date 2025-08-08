@@ -23,8 +23,6 @@ protected:
 	virtual void Tick(float DeltaTime) override;
 	virtual void SetupPlayerInputComponent(UInputComponent* PlayerInputComponent);
 
-	void Move(const FInputActionValue& Value);
-
 	void MoveInDirection(const FVector& Direction);
 	void StopMovingInDirection(const FVector& Direction);
 

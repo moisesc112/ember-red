@@ -21,8 +21,6 @@ void APaperZDRedCharacter::BeginPlay()
 	check(GEngine != nullptr);
 
 	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, TEXT("We are using PaperZDCharacter"));
-
-
 	
 	if (APlayerController* PC = Cast<APlayerController>(Controller))
 	{
@@ -36,12 +34,9 @@ void APaperZDRedCharacter::BeginPlay()
 void APaperZDRedCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-	//GEngine->AddOnScreenDebugMessage(-1, 0.1f, FColor::Green, TEXT("Tick!"));
-	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, LastDirection.ToString());
 
 	if (!LastDirection.IsZero())
 		AddMovementInput(LastDirection);
-
 }
 
 void APaperZDRedCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
@@ -81,7 +76,6 @@ void APaperZDRedCharacter::MoveLeft()
 {
 	MoveInDirection(-FVector::ForwardVector);
 }
-
 
 void APaperZDRedCharacter::StopMoveUp()
 {
@@ -124,61 +118,4 @@ void APaperZDRedCharacter::StopMovingInDirection(const FVector& Direction)
 	{
 		LastDirection = FVector::ZeroVector;
 	}
-}
-
-
-
-void APaperZDRedCharacter::Move(const FInputActionValue& Value)
-{
-	/*
-	CurrentInput = Value.Get<FVector2D>();
-	
-	if (CurrentInput.IsNearlyZero())
-	{
-		LastDirection = FVector2D::ZeroVector;
-		return;
-	}																																																																																		LastDirection = CurrentInput;
-
-	if (FMath::Abs(CurrentInput.X) > 0.f && CurrentInput.Y == 0.f)
-	{
-		LastDirection = FVector2D(CurrentInput.X, 0.f);
-	}
-	else if (FMath::Abs(CurrentInput.Y) > 0.f && CurrentInput.X == 0.f)
-	{
-		LastDirection = FVector2D(0.f, CurrentInput.Y);
-	}
-
-	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Yellow, CurrentInput.ToString());
-	GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Red, LastDirection.ToString());
-
-
-	
-	if (LastDirection.X > 0.f && CurrentInput.Y == 0.f)
-		AddMovementInput(FVector::ForwardVector, 1.0f);
-	else if (LastDirection.X > 0.f && CurrentInput.Y > 0.f)
-		AddMovementInput(FVector::RightVector, 1.0f);
-	else if (LastDirection.X > 0.f && CurrentInput.Y < 0.f)
-		AddMovementInput(FVector::RightVector, -1.0f);
-
-	else if (LastDirection.X < 0.f && CurrentInput.Y == 0.f)
-		AddMovementInput(FVector::ForwardVector, -1.0f);
-	else if (LastDirection.X < 0.f && CurrentInput.Y > 0.f)
-		AddMovementInput(FVector::RightVector, 1.0f);
-	else if (LastDirection.X < 0.f && CurrentInput.Y < 0.f)
-		AddMovementInput(FVector::RightVector, -1.0f);
-
-	else if (LastDirection.Y < 0.f && CurrentInput.X == 0.f)
-		AddMovementInput(FVector::RightVector, -1.0f);
-	else if (LastDirection.Y < 0.f && CurrentInput.X > 0.f)
-		AddMovementInput(FVector::ForwardVector, 1.0f);
-	else if (LastDirection.Y < 0.f && CurrentInput.X < 0.f)
-		AddMovementInput(FVector::ForwardVector, -1.0f);
-
-	else if (LastDirection.Y > 0.f && CurrentInput.X == 0.f)
-		AddMovementInput(FVector::RightVector, 1.0f);
-	else if (LastDirection.Y > 0.f && CurrentInput.X > 0.f)
-		AddMovementInput(FVector::ForwardVector, 1.0f);
-	else if (LastDirection.Y > 0.f && CurrentInput.X < 0.f)
-		AddMovementInput(FVector::ForwardVector, -1.0f);
-	*/
 }
