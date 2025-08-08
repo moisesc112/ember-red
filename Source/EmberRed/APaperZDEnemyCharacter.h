@@ -7,6 +7,7 @@
 #include "APaperZDEnemyCharacter.generated.h"
 
 class UBoxComponent;
+class ABattleManager;
 
 UCLASS()
 class EMBERRED_API APaperZDEnemyCharacter : public APaperZDRedCharacter
@@ -40,4 +41,11 @@ protected:
 
     UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Detection")
     UBoxComponent* DetectionBox;
+
+    UPROPERTY(EditAnywhere, Category = "Battle")
+    TSubclassOf<ABattleManager> BattleManagerClass;
+
+    UPROPERTY()
+    ABattleManager* BattleManager;
+
 };

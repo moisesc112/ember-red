@@ -37,19 +37,19 @@ protected:
 	void StopMoveLeft();
 
 	UPROPERTY(EditAnywhere, Category = "Input")
-	TSoftObjectPtr<UInputMappingContext> InputMapping;
+	TObjectPtr<UInputMappingContext> InputMapping;
 
 	UPROPERTY(EditAnywhere, Category = "Input")
-	TSoftObjectPtr<UInputAction> UpAction;
+	TObjectPtr<UInputAction> UpAction;
 	
 	UPROPERTY(EditAnywhere, Category = "Input")
-	TSoftObjectPtr<UInputAction> DownAction;
+	TObjectPtr<UInputAction> DownAction;
 
 	UPROPERTY(EditAnywhere, Category = "Input")
-	TSoftObjectPtr<UInputAction> RightAction;
+	TObjectPtr<UInputAction> RightAction;
 
 	UPROPERTY(EditAnywhere, Category = "Input")
-	TSoftObjectPtr<UInputAction> LeftAction;
+	TObjectPtr<UInputAction> LeftAction;
 
 
 	FVector2D CurrentInput = FVector2D::ZeroVector;

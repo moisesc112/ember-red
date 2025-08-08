@@ -4,6 +4,7 @@
 #include "APaperZDEnemyCharacter.h"
 #include "Components/BoxComponent.h"
 #include "GameFramework/Actor.h"
+#include "ABattleManager.h"
 
 APaperZDEnemyCharacter::APaperZDEnemyCharacter()
 {
@@ -11,6 +12,9 @@ APaperZDEnemyCharacter::APaperZDEnemyCharacter()
 
     DetectionBox = CreateDefaultSubobject<UBoxComponent>(TEXT("DetectionBox"));
     DetectionBox->SetupAttachment(RootComponent);
+
+    //BattleManager = CreateDefaultSubobject<ABattleManager>(TEXT("BattleManager"));
+    //BattleManager->SetupAttachment(RootComponent);
 }
 
 void APaperZDEnemyCharacter::BeginPlay()
@@ -37,6 +41,19 @@ void APaperZDEnemyCharacter::OnDetectionBoxBeginOverlap(
     {
         UE_LOG(LogTemp, Warning, TEXT("Detected actor: %s"), *OtherActor->GetName());
         // TODO: Trigger engage/attack logic
+
+        FActorSpawnParameters Params;
+        Params.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AlwaysSpawn;
+        BattleManager = GetWorld()->SpawnActor<ABattleManager>(
+            BattleManagerClass,
+            GetActorLocation(), // or some hidden battle spot
+            FRotator::ZeroRotator,
+            Params
+        );
+
+
+        BattleManager->InitBattle(OtherActor, this);
+        //DetectionBox->SetGenerateOverlapEvents(false);
     }
 }
 
@@ -51,5 +68,6 @@ void APaperZDEnemyCharacter::OnDetectionBoxEndOverlap(
     {
         UE_LOG(LogTemp, Warning, TEXT("Actor left detection range: %s"), *OtherActor->GetName());
         // TODO: Stop chasing logic
+        //DetectionBox->SetGenerateOverlapEvents(true);
     }
 }
