@@ -9,6 +9,8 @@
 
 class UInputMappingContext;
 class UInputAction;
+class USpringArmComponent;
+class UCameraComponent;
 
 UCLASS()
 class EMBERRED_API APaperZDRedCharacter : public APaperZDCharacter
@@ -36,6 +38,9 @@ protected:
 	void StopMoveRight();
 	void StopMoveLeft();
 
+	void GetSpringArmComponent();
+	void GetCameraComponent();
+
 	UPROPERTY(EditAnywhere, Category = "Input")
 	TObjectPtr<UInputMappingContext> InputMapping;
 
@@ -56,4 +61,12 @@ protected:
 	FVector LastDirection = FVector::ZeroVector;
 	
 	TArray<FVector> ActiveDirections;
+
+private:
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
+	USpringArmComponent* SpringArmComponent;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = Camera, meta = (AllowPrivateAccess = "true"))
+	UCameraComponent* CameraComponent;
+
 };

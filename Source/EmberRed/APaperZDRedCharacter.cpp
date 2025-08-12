@@ -4,15 +4,29 @@
 #include "EnhancedInputComponent.h"
 #include "EnhancedInputSubsystems.h"
 #include "InputMappingContext.h"
-//#include "InputAction.h"
 #include "GameFramework/PlayerController.h"
 #include "Components/InputComponent.h"
+#include "Components/CapsuleComponent.h"
+#include "GameFramework/SpringArmComponent.h"
+#include "Camera/CameraComponent.h"
 
 APaperZDRedCharacter::APaperZDRedCharacter()
 {
 	PrimaryActorTick.bCanEverTick = true;
-}
 
+	GetCapsuleComponent()->InitCapsuleSize(34.0f, 70.0f);
+	
+	SpringArmComponent = CreateDefaultSubobject<USpringArmComponent>(TEXT("SpringArm"));
+	SpringArmComponent->SetupAttachment(RootComponent);
+	SpringArmComponent->TargetArmLength = 750.0f;
+	SpringArmComponent->SetUsingAbsoluteRotation(true);
+	SpringArmComponent->SetWorldRotation(FRotator(-30.0f, -90.0f, 0.0f));
+	SpringArmComponent->bUsePawnControlRotation = false;
+
+	CameraComponent = CreateDefaultSubobject<UCameraComponent>(TEXT("Camera"));
+	CameraComponent->SetupAttachment(SpringArmComponent, USpringArmComponent::SocketName);
+	CameraComponent->bUsePawnControlRotation = false;
+}
 
 void APaperZDRedCharacter::BeginPlay()
 {
@@ -118,4 +132,14 @@ void APaperZDRedCharacter::StopMovingInDirection(const FVector& Direction)
 	{
 		LastDirection = FVector::ZeroVector;
 	}
+}
+
+void APaperZDRedCharacter::GetSpringArmComponent()
+{
+
+}
+
+void APaperZDRedCharacter::GetCameraComponent()
+{
+
 }
