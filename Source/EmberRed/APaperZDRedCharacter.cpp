@@ -134,12 +134,12 @@ void APaperZDRedCharacter::StopMovingInDirection(const FVector& Direction)
 	}
 }
 
-void APaperZDRedCharacter::GetSpringArmComponent()
+USpringArmComponent* APaperZDRedCharacter::GetSpringArmComponent()
 {
-
+	return SpringArmComponent;
 }
 
-void APaperZDRedCharacter::GetCameraComponent()
+UCameraComponent* APaperZDRedCharacter::GetCameraComponent()
 {
-
+	return CameraComponent;
 }

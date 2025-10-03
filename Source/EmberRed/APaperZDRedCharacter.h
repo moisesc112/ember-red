@@ -38,8 +38,8 @@ protected:
 	void StopMoveRight();
 	void StopMoveLeft();
 
-	void GetSpringArmComponent();
-	void GetCameraComponent();
+	USpringArmComponent* GetSpringArmComponent();
+	UCameraComponent* GetCameraComponent();
 
 	UPROPERTY(EditAnywhere, Category = "Input")
 	TObjectPtr<UInputMappingContext> InputMapping;
